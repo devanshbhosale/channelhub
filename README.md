@@ -17,8 +17,8 @@ One Spring Boot fat JAR serves the React SPA and the REST API from the same arti
 
 1. Build the frontend (outputs into the backend's static resources):
    `cd frontend && npm install && npm run build`
-2. Run the backend:
-   `cd backend && ./mvnw spring-boot:run`
+2. Run the backend from the repo root:
+   `./mvnw spring-boot:run`
 3. Open http://localhost:8080 — API docs at /swagger-ui.html.
 
 ## Deployment
