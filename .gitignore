@@ -1,0 +1,12 @@
+target/
+node_modules/
+frontend/dist/
+.env
+*.log
+*.db
+.idea/
+.vscode/
+.DS_Store
+src/main/resources/static/
+CONTRACT.md
+inv-check.pdf
