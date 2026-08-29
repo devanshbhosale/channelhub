@@ -9,6 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import org.hibernate.annotations.Formula;
+
 @Entity
 @Table(name = "products")
 public class Product {
@@ -16,6 +18,11 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    // ponytail: subquery runs per product row load; fine at catalog scale,
+    // move to an explicit availability query if listings grow.
+    @Formula("(select coalesce(sum(i.quantity), 0) from inventory i where i.product_id = id)")
+    private int stock;
 
     @Column(unique = true, nullable = false, length = 50)
     private String sku;
@@ -40,6 +47,10 @@ public class Product {
 
     public Long getId() {
         return id;
+    }
+
+    public int getStock() {
+        return stock;
     }
 
     public void setId(Long id) {
