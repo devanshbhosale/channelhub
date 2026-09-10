@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useCart } from '../cart';
@@ -46,13 +47,22 @@ export default function Layout({ children }) {
   const cartCount = cart.reduce((s, i) => s + i.qty, 0);
   const title = TITLES[loc.pathname] || (/^\/orders\/\d+$/.test(loc.pathname) ? 'Order Detail' : 'ChannelHub');
 
+  const [sideClosed, setSideClosed] = useState(
+    () => localStorage.getItem('ch-sidebar-closed') === '1'
+  );
+  const toggleSidebar = () =>
+    setSideClosed((closed) => {
+      localStorage.setItem('ch-sidebar-closed', closed ? '0' : '1');
+      return !closed;
+    });
+
   const demoText = isAdmin
     ? 'Demo mode — admin actions are disabled. Browse and inspect freely; write actions are blocked.'
     : 'Demo mode — you are using the sample reseller account. Ordering works normally.';
 
   return (
-    <div className="app">
-      <aside className="sidebar">
+    <div className={'app' + (sideClosed ? ' side-closed' : '')}>
+      <aside className="sidebar" id="app-sidebar">
         <div className="logo">
           <span className="logo-mark" />
           ChannelHub
@@ -85,7 +95,25 @@ export default function Layout({ children }) {
 
       <div className="main">
         <header className="topbar">
-          <h1>{title}</h1>
+          <div className="topbar-left">
+            <button
+              type="button"
+              className="side-toggle"
+              onClick={toggleSidebar}
+              aria-expanded={!sideClosed}
+              aria-controls="app-sidebar"
+              title={sideClosed ? 'Open sidebar' : 'Close sidebar'}
+            >
+              <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true">
+                <rect
+                  x="1.5" y="2.5" width="13" height="11" rx="1.6"
+                  fill="none" stroke="currentColor" strokeWidth="1.3"
+                />
+                <rect x="3" y="4" width="2.6" height="8" rx="0.8" fill="currentColor" />
+              </svg>
+            </button>
+            <h1>{title}</h1>
+          </div>
           <div className="topbar-right">
             {user.isDemo && <span className="chip chip-amber">Demo</span>}
             <span className={'role-chip' + (isAdmin ? ' role-admin' : '')}>{user.role}</span>

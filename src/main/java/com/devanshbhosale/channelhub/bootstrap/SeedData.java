@@ -189,17 +189,17 @@ public class SeedData implements ApplicationRunner {
 
         List<Reseller> resellers = new ArrayList<>();
         resellers.add(reseller("reseller.demo@channelhub.in", demoResellerHash, "Demo Reseller",
-                "Sunrise Computer Traders", "27AAECS1234F1Z5", "9820000021", "1500000.00"));
+                "Sunrise Computer Traders", "27AAECS1234F1Z5", "9820000021", "1500000.00", true));
         resellers.add(reseller("krishna@krishnasystems.in", resellerHash, "Krishna Iyer",
-                "Krishna Systems & Peripherals", "27AAKCS4321M1ZK", "9833100121", "1200000.00"));
+                "Krishna Systems & Peripherals", "27AAKCS4321M1ZK", "9833100121", "1200000.00", false));
         resellers.add(reseller("cybertech@cybertechdist.in", resellerHash, "Farhan Qureshi",
-                "Cybertech Distributors", "29AABCC5678P1Z2", "9845600231", "800000.00"));
+                "Cybertech Distributors", "29AABCC5678P1Z2", "9845600231", "800000.00", false));
         resellers.add(reseller("balaji@balajiitsolutions.in", resellerHash, "Balaji Rao",
-                "Shree Balaji IT Solutions", "07AAQCS9012L1Z8", "9867100341", "200000.00"));
+                "Shree Balaji IT Solutions", "07AAQCS9012L1Z8", "9867100341", "200000.00", false));
         resellers.add(reseller("vertex@vertexinfotech.in", resellerHash, "Vijay Anand",
-                "Vertex Infotech", "33AAICV2468H1ZQ", "9873300451", "1500000.00"));
+                "Vertex Infotech", "33AAICV2468H1ZQ", "9873300451", "1500000.00", false));
         resellers.add(reseller("zenith@zenithdatasystems.in", resellerHash, "Zoya Khan",
-                "Zenith Data Systems", "27AAUCZ1359K1Z6", "9892200561", "350000.00"));
+                "Zenith Data Systems", "27AAUCZ1359K1Z6", "9892200561", "350000.00", false));
         return resellers;
     }
 
@@ -355,8 +355,8 @@ public class SeedData implements ApplicationRunner {
     }
 
     private Reseller reseller(String email, String passwordHash, String fullName, String companyName,
-                              String gstin, String phone, String creditLimit) {
-        User u = userRepository.save(user(email, passwordHash, fullName, UserRole.RESELLER, false));
+                              String gstin, String phone, String creditLimit, boolean demo) {
+        User u = userRepository.save(user(email, passwordHash, fullName, UserRole.RESELLER, demo));
         Reseller r = new Reseller();
         r.setUserId(u.getId());
         r.setCompanyName(companyName);

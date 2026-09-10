@@ -15,6 +15,9 @@ function readUser() {
 function persist(token, user, setUser) {
   localStorage.setItem('ch_token', token);
   localStorage.setItem('ch_user', JSON.stringify(user));
+  // Demo sessions pitch the app to strangers — start them with the sidebar
+  // closed so the content is the first thing they see. Everyone else starts open.
+  localStorage.setItem('ch-sidebar-closed', user.isDemo ? '1' : '0');
   clearCart();
   setUser(user);
 }
