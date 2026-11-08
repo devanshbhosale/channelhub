@@ -7,6 +7,12 @@ credit limit, order tracking, and distributor-side fulfilment and analytics.
 One Spring Boot fat JAR serves the React SPA and the REST API from the same artifact
 (same origin, no CORS).
 
+## Screenshots
+
+Admin dashboard (demo workspace, sample data):
+
+![ChannelHub admin dashboard — pending and approved orders, low stock rows, revenue this month, 14-day orders and revenue chart](docs/screenshots/channelhub-admin-dashboard.png)
+
 ## Stack
 
 - Backend: Java 21, Spring Boot 3.5.x, Spring Data JPA (Hibernate), Spring Security (JWT), JUnit 5, JaCoCo
